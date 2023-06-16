@@ -44,7 +44,7 @@ from .vcs_helpers import (
     update_additional_files,
     update_changelog_file,
 )
-from helpers import zipit
+from .helpers import zipit
 
 logger = logging.getLogger("semantic_release")
 
