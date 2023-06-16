@@ -425,7 +425,10 @@ def publish(
                     all_files = files.split(' ')
                     logger.info(all_files)
                     zipit(all_files, dist_path + '/' + result_zip)
-                    logger.info(f"Ziped: {','.join(info_zip(dist_path + '/' + result_zip))}" )
+                    logger.info("Ziped:" )
+                    for fn in info_zip(dist_path + '/' + result_zip):
+                        logger.info(fn)
+                    
                 logger.info("Uploading to HVCS release")
                 upload_to_release(owner, name, new_version, dist_path)
                 logger.info("Upload to HVCS is complete")
