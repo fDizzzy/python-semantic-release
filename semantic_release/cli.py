@@ -426,7 +426,8 @@ def publish(
                     logger.info(all_files)
                     zipit(all_files, dist_path + '/' + result_zip)
                     logger.info("Ziped:" )
-                    for fn in info_zip(dist_path + '/' + result_zip):
+                    zip_info = info_zip(dist_path + '/' + result_zip)
+                    for fn in zip_info:
                         logger.info(fn)
                     
                 logger.info("Uploading to HVCS release")
