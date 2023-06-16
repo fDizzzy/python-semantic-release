@@ -55,7 +55,7 @@ def zipit(dir_file_list: List[str], zip_name):
             if(os.path.isfile(dir_or_file)):
                 zipf.write(dir_or_file)
             else:
-                zipdir(dir, zipf)
+                zipdir(dir_or_file, zipf)
         zipf.close()
 def trim_csv_str(csv_str: str) -> List[str]:
     """
