@@ -44,6 +44,7 @@ from .vcs_helpers import (
     update_additional_files,
     update_changelog_file,
 )
+from helpers import zipit
 
 logger = logging.getLogger("semantic_release")
 
@@ -414,6 +415,13 @@ def publish(
         # Upload to GitHub Releases
         if upload_release:
             if check_token():
+                logger.info("Custom zip file")
+                # Get config options for uploads
+                custom_zip = config.get("custom_zip")
+                if(custom_zip):
+                    files = config.get("files")
+                    result_zip = config.get("result_zip")
+                    zipit(files.split(' '), dist_path +'/'+result_zip)
                 logger.info("Uploading to HVCS release")
                 upload_to_release(owner, name, new_version, dist_path)
                 logger.info("Upload to HVCS is complete")

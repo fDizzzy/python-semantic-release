@@ -1,6 +1,7 @@
 import functools
 from typing import List, Union
-
+import os
+import zipfile
 from requests import Session
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
@@ -38,7 +39,24 @@ def build_requests_session(
         session.mount("https://", adapter)
     return session
 
+def zipdir(path: str, ziph: zipfile.ZipFile):
+    # ziph is zipfile handle
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            ziph.write(os.path.join(root, file),
+                       os.path.relpath(os.path.join(root, file),
+                                       os.path.join(path, '..')))
 
+
+def zipit(dir_file_list: List[str], zip_name):
+    if(len(dir_file_list) > 0):
+        zipf = zipfile.ZipFile(zip_name, 'w', zipfile.ZIP_DEFLATED)
+        for dir_or_file in dir_file_list:
+            if(os.path.isfile(dir_or_file)):
+                zipf.write(dir_or_file)
+            else:
+                zipdir(dir, zipf)
+        zipf.close()
 def trim_csv_str(csv_str: str) -> List[str]:
     """
     Trim whitespace from each value in a comma-separated string.
