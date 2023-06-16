@@ -57,6 +57,11 @@ def zipit(dir_file_list: List[str], zip_name):
             else:
                 zipdir(dir_or_file, zipf)
         zipf.close()
+
+def info_zip(zip_name):
+    zip = zipfile.ZipFile(zip_name)
+    return zip.namelist()
+
 def trim_csv_str(csv_str: str) -> List[str]:
     """
     Trim whitespace from each value in a comma-separated string.
