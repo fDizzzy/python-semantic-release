@@ -421,7 +421,11 @@ def publish(
                 if(custom_zip):
                     files = config.get("files")
                     result_zip = config.get("result_zip")
-                    zipit(files.split(' '), dist_path +'/'+result_zip)
+                    logger.info("Zip file " + files + "into " + result_zip)
+                    all_files = files.split(' ')
+                    all_files.append(dist_path)
+                    logger.info(all_files)
+                    zipit(all_files, dist_path + '/' + result_zip)
                 logger.info("Uploading to HVCS release")
                 upload_to_release(owner, name, new_version, dist_path)
                 logger.info("Upload to HVCS is complete")
