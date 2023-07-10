@@ -45,6 +45,7 @@ from .vcs_helpers import (
     update_changelog_file,
 )
 from .helpers import zipit, info_zip
+import shutil
 
 logger = logging.getLogger("semantic_release")
 
@@ -421,14 +422,16 @@ def publish(
                 if(custom_zip):
                     files = config.get("files")
                     result_zip = config.get("result_zip")
-                    logger.info("Zip file " + files + "into " + result_zip)
+                    logger.info("Zip file " + files + " into " + result_zip)
                     all_files = files.split(' ')
                     logger.info(all_files)
-                    zipit(all_files, dist_path + '/' + result_zip)
+                    zipit(all_files, result_zip)
+                    shutil.copyfile(result_zip, dist_path + '/' + result_zip)
                     logger.info("Ziped:" )
                     zip_info = info_zip(dist_path + '/' + result_zip)
                     for fn in zip_info:
                         logger.info(fn)
+                    os.remove(result_zip)
                     
                 logger.info("Uploading to HVCS release")
                 upload_to_release(owner, name, new_version, dist_path)
